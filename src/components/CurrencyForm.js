@@ -12,6 +12,7 @@ import {
   Box,
   Text,
   Spacer,
+  useToast,
 } from "@chakra-ui/react";
 
 const API_KEY = process.env.REACT_APP_RAPIDAPI_KEY;
@@ -20,10 +21,12 @@ const CurrencyForm = () => {
   const [currencyRate, setCurrencyRate] = useState("");
   const [currencyExchangeRate, setCurrencyExchangeRate] = useState("");
   const [showResults, setShowResults] = useState(false);
+  const [isConverting, setIsConverting] = useState(false);
 
   const currencyOneInputRef = useRef();
   const currencyTwoInputRef = useRef();
   const currencyAmountRef = useRef();
+  const toast = useToast();
 
   const displayCurrencyTwoHandler = () => {
     return currencyTwoInputRef.current.value;
@@ -39,6 +42,7 @@ const CurrencyForm = () => {
 
   const submitFormHandler = (event) => {
     event.preventDefault();
+    setIsConverting(true);
 
     const firstCurrency = currencyOneInputRef.current.value;
     const secondCurrency = currencyTwoInputRef.current.value;
@@ -55,12 +59,23 @@ const CurrencyForm = () => {
         },
       }
     ).then((response) => {
-      response.json().then((data) => {
-        const exchangeRateAmount = data.rates[secondCurrency].rate_for_amount;
-        const currencyExchangeRate = data.rates[secondCurrency].rate;
-        setCurrencyRate(exchangeRateAmount);
-        setCurrencyExchangeRate(currencyExchangeRate);
-      });
+      if (response.ok) {
+        response.json().then((data) => {
+          setIsConverting(false);
+          const exchangeRateAmount = data.rates[secondCurrency].rate_for_amount;
+          const currencyExchangeRate = data.rates[secondCurrency].rate;
+          setCurrencyRate(exchangeRateAmount);
+          setCurrencyExchangeRate(currencyExchangeRate);
+        });
+      } else {
+        toast({
+          description: "Unable to convert",
+          status: "error",
+          duration: 4000,
+          isClosable: true,
+          position: "top",
+        });
+      }
     });
   };
 
@@ -107,15 +122,28 @@ const CurrencyForm = () => {
 
             <Flex justifyContent="center" mt="5">
               <Box>
-                <Button
-                  colorScheme="whiteAlpha"
-                  size="md"
-                  rightIcon={<ArrowForwardIcon />}
-                  type="submit"
-                  onClick={showResultsHandler}
-                >
-                  Convert
-                </Button>
+                {!isConverting && (
+                  <Button
+                    colorScheme="whiteAlpha"
+                    size="md"
+                    rightIcon={<ArrowForwardIcon />}
+                    type="submit"
+                    onClick={showResultsHandler}
+                  >
+                    Convert
+                  </Button>
+                )}
+                {isConverting && (
+                  <Button
+                    colorScheme="whiteAlpha"
+                    size="md"
+                    rightIcon={<ArrowForwardIcon />}
+                    type="submit"
+                    onClick={showResultsHandler}
+                    isLoading
+                    loadingText="Converting"
+                  ></Button>
+                )}
               </Box>
             </Flex>
           </Flex>
