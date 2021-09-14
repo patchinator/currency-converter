@@ -1,7 +1,12 @@
+import Form from "./components/Form";
+import { Fragment } from "react";
+
 function App() {
-  return <div className="App">
-    <h1>hello</h1>
-  </div>;
+  return (
+    <Fragment>
+      <Form />
+    </Fragment>
+  );
 }
 
 export default App;
