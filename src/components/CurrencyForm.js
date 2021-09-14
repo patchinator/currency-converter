@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef, useState, Fragment } from "react";
 import { Container, Flex } from "@chakra-ui/layout";
 import { ArrowForwardIcon } from "@chakra-ui/icons";
 import {
@@ -10,6 +10,7 @@ import {
   Input,
   Box,
   Text,
+  Spacer,
 } from "@chakra-ui/react";
 
 const API_KEY = process.env.REACT_APP_RAPIDAPI_KEY;
@@ -27,14 +28,6 @@ const CurrencyForm = () => {
     const secondCurrency = currencyTwoInputRef.current.value;
     const currencyAmount = currencyAmountRef.current.value;
 
-    const currencyData = {
-      currencyOne: firstCurrency,
-      currencyTwo: secondCurrency,
-      amount: currencyAmount,
-    };
-
-    console.log(currencyData);
-
     fetch(
       `https://currency-converter5.p.rapidapi.com/currency/convert?format=json&from=${firstCurrency}&to=${secondCurrency}&amount=${currencyAmount}`,
       {
@@ -47,47 +40,55 @@ const CurrencyForm = () => {
       }
     ).then((response) => {
       response.json().then((data) => {
-        const exchangeRate = data.rates[secondCurrency].rate;
-        setCurrencyRate(exchangeRate)
+        const exchangeRate = data.rates[secondCurrency].rate_for_amount;
+        console.log(data)
+        setCurrencyRate(exchangeRate);
       });
     });
   };
 
   return (
-    <Container maxWidth="container.md" p="5">
+    <Fragment>
       <Box bg="orange.500" p="4" borderRadius="2xl">
         <form onSubmit={submitFormHandler}>
           <Flex flexDirection="column">
-            <Flex mt="2">
-              <FormControl>
-                <FormLabel>Currency 1</FormLabel>
-                <Select bg="white" ref={currencyOneInputRef}>
-                  <option>GBP</option>
-                  <option>USD</option>
-                </Select>
-                <FormHelperText color="white">
-                  Select a currency you wish to convert.
-                </FormHelperText>
-              </FormControl>
-              <FormControl ml="10">
-                <FormLabel>Amount</FormLabel>
-                <Input type="number" bg="white" ref={currencyAmountRef}></Input>
-                <FormHelperText color="white">Enter the amount.</FormHelperText>
-              </FormControl>
-            </Flex>
+            <FormControl mt="2">
+              <FormLabel>Currency 1</FormLabel>
+              <Select bg="white" ref={currencyOneInputRef}>
+                <option>GBP</option>
+                <option>USD</option>
+                <option>EUR</option>
+                <option>JPY</option>
+                <option>CHF</option>
+                <option>CAD</option>
+                <option>AUD</option>
+              </Select>
+              <FormHelperText color="white">
+                Select a currency you wish to convert.
+              </FormHelperText>
+            </FormControl>
 
-            <Flex mt="2">
-              <FormControl>
-                <FormLabel>Currency 2</FormLabel>
-                <Select bg="white" ref={currencyTwoInputRef}>
-                  <option>GBP</option>
-                  <option>USD</option>
-                </Select>
-                <FormHelperText color="white">
-                  Select a currency you wish to convert to.
-                </FormHelperText>
-              </FormControl>
-            </Flex>
+            <FormControl mt="2">
+              <FormLabel>Currency 2</FormLabel>
+              <Select bg="white" ref={currencyTwoInputRef}>
+                <option>GBP</option>
+                <option>USD</option>
+                <option>EUR</option>
+                <option>JPY</option>
+                <option>CHF</option>
+                <option>CAD</option>
+                <option>AUD</option>
+              </Select>
+              <FormHelperText color="white">
+                Select a currency you wish to convert to.
+              </FormHelperText>
+            </FormControl>
+
+            <FormControl mt="2">
+              <FormLabel>Amount</FormLabel>
+              <Input type="number" bg="white" ref={currencyAmountRef}></Input>
+              <FormHelperText color="white">Enter the amount.</FormHelperText>
+            </FormControl>
 
             <Flex justifyContent="center" mt="5">
               <Box>
@@ -104,7 +105,27 @@ const CurrencyForm = () => {
           </Flex>
         </form>
       </Box>
-    </Container>
+
+      <Spacer mt="4" />
+
+      <Container w="100%" p="0">
+        <Box bg="orange.500" p="3" borderRadius="2xl">
+          <Flex justifyContent="center">
+            <Box
+              bg="white"
+              pl="5"
+              pr="5"
+              pt="1"
+              pb="1"
+              borderRadius="md"
+              boxShadow="md"
+            >
+              <Text>{currencyRate}</Text>
+            </Box>
+          </Flex>
+        </Box>
+      </Container>
+    </Fragment>
   );
 };
 
