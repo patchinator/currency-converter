@@ -1,23 +1,34 @@
-import { Container } from "@chakra-ui/layout";
-import { Button } from "@chakra-ui/react";
+import { Container, Flex } from "@chakra-ui/layout";
+import { Button, FormControl, FormLabel, FormHelperText, Select } from "@chakra-ui/react";
+import { ArrowForwardIcon } from "@chakra-ui/icons";
 
 const Form = () => {
   return (
-    <Container maxWidth="container.xl" padding="0">
-      <form>
-        <div>
-          <h2>Form</h2>
-        </div>
-        <div>
-          <label htmlFor="">Currency One</label>
-          <input type="text" />
-        </div>
-        <div>
-          <label htmlFor="">Currency Two</label>
-          <input type="text" />
-        </div>
-        <Button colorScheme="blue" size="md">Convert</Button>
-      </form>
+    <Container maxWidth="container.md" p="5">
+      <Flex flexDirection="column">
+        <FormControl>
+          <FormLabel>Currency 1</FormLabel>
+          <Select>
+            <option>GBP</option>
+            <option>USD</option>
+          </Select>
+          <FormHelperText>Select a currency you wish to convert</FormHelperText>
+        </FormControl>
+
+        <FormControl>
+            <FormLabel>Currency 2</FormLabel>
+          <Select>
+            <option>GBP</option>
+            <option>USD</option>
+          </Select>
+          <FormHelperText>
+            Select a currency you wish to convert to
+          </FormHelperText>
+        </FormControl>
+        <Button colorScheme="blue" size="md" rightIcon={<ArrowForwardIcon />}>
+          Convert
+        </Button>
+      </Flex>
     </Container>
   );
 };
