@@ -1,4 +1,5 @@
 import { useRef, useState, Fragment } from "react";
+
 import { Container, Flex } from "@chakra-ui/layout";
 import { ArrowForwardIcon } from "@chakra-ui/icons";
 import {
@@ -17,16 +18,24 @@ const API_KEY = process.env.REACT_APP_RAPIDAPI_KEY;
 
 const CurrencyForm = () => {
   const [currencyRate, setCurrencyRate] = useState("");
-  const [currencyExchangeRate, setCurrencyExchangeRate] = useState("")
+  const [currencyExchangeRate, setCurrencyExchangeRate] = useState("");
   const [showResults, setShowResults] = useState(false);
 
   const currencyOneInputRef = useRef();
   const currencyTwoInputRef = useRef();
   const currencyAmountRef = useRef();
 
+  const displayCurrencyTwoHandler = () => {
+    return currencyTwoInputRef.current.value;
+  }
+
+  const displayCurrencyOneHandler = () => {
+    return currencyOneInputRef.current.value;
+  }
+
   const showResultsHandler = () => {
     setShowResults(true);
-  }
+  };
 
   const submitFormHandler = (event) => {
     event.preventDefault();
@@ -48,7 +57,7 @@ const CurrencyForm = () => {
     ).then((response) => {
       response.json().then((data) => {
         const exchangeRateAmount = data.rates[secondCurrency].rate_for_amount;
-        const currencyExchangeRate = data.rates[secondCurrency].rate
+        const currencyExchangeRate = data.rates[secondCurrency].rate;
         setCurrencyRate(exchangeRateAmount);
         setCurrencyExchangeRate(currencyExchangeRate);
       });
@@ -67,7 +76,6 @@ const CurrencyForm = () => {
                 <option>USD</option>
                 <option>EUR</option>
                 <option>JPY</option>
-                <option>CHF</option>
                 <option>CAD</option>
                 <option>AUD</option>
               </Select>
@@ -83,7 +91,6 @@ const CurrencyForm = () => {
                 <option>USD</option>
                 <option>EUR</option>
                 <option>JPY</option>
-                <option>CHF</option>
                 <option>CAD</option>
                 <option>AUD</option>
               </Select>
@@ -130,8 +137,13 @@ const CurrencyForm = () => {
                 borderRadius="md"
                 boxShadow="md"
               >
-                <Text>Current Rate: {currencyRate}</Text>
-                <Text>Exchange Rate: {currencyExchangeRate}</Text>
+                <Text textAlign="center">
+                  Current Rate: {displayCurrencyTwoHandler()} {currencyRate}
+                </Text>
+                <Text textAlign="center">
+                  Exchange Rate: {displayCurrencyTwoHandler()}{" "}
+                  {currencyExchangeRate} / {displayCurrencyOneHandler()}
+                </Text>
               </Box>
             </Flex>
           </Box>
