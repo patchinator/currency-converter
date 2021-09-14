@@ -17,9 +17,16 @@ const API_KEY = process.env.REACT_APP_RAPIDAPI_KEY;
 
 const CurrencyForm = () => {
   const [currencyRate, setCurrencyRate] = useState("");
+  const [currencyExchangeRate, setCurrencyExchangeRate] = useState("")
+  const [showResults, setShowResults] = useState(false);
+
   const currencyOneInputRef = useRef();
   const currencyTwoInputRef = useRef();
   const currencyAmountRef = useRef();
+
+  const showResultsHandler = () => {
+    setShowResults(true);
+  }
 
   const submitFormHandler = (event) => {
     event.preventDefault();
@@ -40,9 +47,10 @@ const CurrencyForm = () => {
       }
     ).then((response) => {
       response.json().then((data) => {
-        const exchangeRate = data.rates[secondCurrency].rate_for_amount;
-        console.log(data)
-        setCurrencyRate(exchangeRate);
+        const exchangeRateAmount = data.rates[secondCurrency].rate_for_amount;
+        const currencyExchangeRate = data.rates[secondCurrency].rate
+        setCurrencyRate(exchangeRateAmount);
+        setCurrencyExchangeRate(currencyExchangeRate);
       });
     });
   };
@@ -86,7 +94,7 @@ const CurrencyForm = () => {
 
             <FormControl mt="2">
               <FormLabel>Amount</FormLabel>
-              <Input type="number" bg="white" ref={currencyAmountRef}></Input>
+              <Input type="text" bg="white" ref={currencyAmountRef}></Input>
               <FormHelperText color="white">Enter the amount.</FormHelperText>
             </FormControl>
 
@@ -97,6 +105,7 @@ const CurrencyForm = () => {
                   size="md"
                   rightIcon={<ArrowForwardIcon />}
                   type="submit"
+                  onClick={showResultsHandler}
                 >
                   Convert
                 </Button>
@@ -108,23 +117,26 @@ const CurrencyForm = () => {
 
       <Spacer mt="4" />
 
-      <Container w="100%" p="0">
-        <Box bg="orange.500" p="3" borderRadius="2xl">
-          <Flex justifyContent="center">
-            <Box
-              bg="white"
-              pl="5"
-              pr="5"
-              pt="1"
-              pb="1"
-              borderRadius="md"
-              boxShadow="md"
-            >
-              <Text>{currencyRate}</Text>
-            </Box>
-          </Flex>
-        </Box>
-      </Container>
+      {showResults && (
+        <Container w="100%" p="0">
+          <Box bg="orange.500" p="3" borderRadius="2xl">
+            <Flex justifyContent="center">
+              <Box
+                bg="white"
+                pl="5"
+                pr="5"
+                pt="1"
+                pb="1"
+                borderRadius="md"
+                boxShadow="md"
+              >
+                <Text>Current Rate: {currencyRate}</Text>
+                <Text>Exchange Rate: {currencyExchangeRate}</Text>
+              </Box>
+            </Flex>
+          </Box>
+        </Container>
+      )}
     </Fragment>
   );
 };
