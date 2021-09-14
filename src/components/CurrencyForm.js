@@ -130,19 +130,20 @@ const CurrencyForm = () => {
             <Flex justifyContent="center">
               <Box
                 bg="white"
-                pl="5"
-                pr="5"
+                width="100%"
                 pt="1"
                 pb="1"
                 borderRadius="md"
                 boxShadow="md"
               >
                 <Text textAlign="center">
-                  Current Rate: {displayCurrencyTwoHandler()} {currencyRate}
+                  <Text fontWeight="bold">Current Rate</Text>{" "}
+                  {displayCurrencyTwoHandler()} {currencyRate}
                 </Text>
                 <Text textAlign="center">
-                  Exchange Rate: {displayCurrencyTwoHandler()}{" "}
-                  {currencyExchangeRate} / {displayCurrencyOneHandler()}
+                  <Text fontWeight="bold">Exchange Rate</Text>{" "}
+                  {displayCurrencyTwoHandler()} {currencyExchangeRate} /{" "}
+                  {displayCurrencyOneHandler()}
                 </Text>
               </Box>
             </Flex>
