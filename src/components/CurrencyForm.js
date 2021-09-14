@@ -27,11 +27,11 @@ const CurrencyForm = () => {
 
   const displayCurrencyTwoHandler = () => {
     return currencyTwoInputRef.current.value;
-  }
+  };
 
   const displayCurrencyOneHandler = () => {
     return currencyOneInputRef.current.value;
-  }
+  };
 
   const showResultsHandler = () => {
     setShowResults(true);
@@ -66,7 +66,7 @@ const CurrencyForm = () => {
 
   return (
     <Fragment>
-      <Box bg="orange.500" p="4" borderRadius="2xl">
+      <Box bg="blue.500" p="4" borderRadius="2xl">
         <form onSubmit={submitFormHandler}>
           <Flex flexDirection="column">
             <FormControl mt="2">
@@ -99,7 +99,7 @@ const CurrencyForm = () => {
               </FormHelperText>
             </FormControl>
 
-            <FormControl mt="2">
+            <FormControl mt="2" isRequired>
               <FormLabel>Amount</FormLabel>
               <Input type="text" bg="white" ref={currencyAmountRef}></Input>
               <FormHelperText color="white">Enter the amount.</FormHelperText>
@@ -108,7 +108,7 @@ const CurrencyForm = () => {
             <Flex justifyContent="center" mt="5">
               <Box>
                 <Button
-                  colorScheme="green"
+                  colorScheme="whiteAlpha"
                   size="md"
                   rightIcon={<ArrowForwardIcon />}
                   type="submit"
@@ -124,9 +124,9 @@ const CurrencyForm = () => {
 
       <Spacer mt="4" />
 
-      {showResults && (
+      {showResults && currencyAmountRef.current.value && (
         <Container w="100%" p="0">
-          <Box bg="orange.500" p="3" borderRadius="2xl">
+          <Box bg="blue.500" p="3" borderRadius="2xl">
             <Flex justifyContent="center">
               <Box
                 bg="white"
