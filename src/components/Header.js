@@ -2,18 +2,12 @@ import { Box, Text, Flex } from "@chakra-ui/layout";
 import { Button } from "@chakra-ui/button";
 import { useColorMode } from "@chakra-ui/color-mode";
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
-import { useColorModeValue } from "@chakra-ui/color-mode";
 
 const Header = () => {
   const { colorMode, toggleColorMode } = useColorMode();
 
   return (
-    <Box
-      bg={useColorModeValue("blue.500", "blue.800")}
-      mb="5"
-      borderRadius="2xl"
-      width="100%"
-    >
+    <Box bg="blue.800" mb="5" borderRadius="2xl" width="100%">
       <Flex
         flexDirection="row"
         justifyContent="space-around"
