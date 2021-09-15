@@ -22,5 +22,5 @@ admire.
 
 ## Screenshots
 
-![alt text](https://github.com/patchinator/currency-converter/src/images/image1./?raw=true "Logo Title Text 1")
-![alt text](https://github.com/patchinator/currency-converter/src/images/image2.png/?raw=true "Logo Title Text 1")
+![alt text](https://github.com/patchinator/currency-converter/src/images/image1.png)
+![alt text](https://github.com/patchinator/currency-converter/src/images/image2.png)
