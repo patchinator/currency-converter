@@ -15,7 +15,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { useColorModeValue } from "@chakra-ui/color-mode";
-import style from './CurrencyForm.module.css';
+import style from "./CurrencyForm.module.css";
 
 const API_KEY = process.env.REACT_APP_RAPIDAPI_KEY;
 
@@ -124,7 +124,10 @@ const CurrencyForm = () => {
                 bg="white"
                 ref={currencyTwoInputRef}
                 color={optionColorBlack}
-                className={style.select_text_color}
+                className={useColorModeValue(
+                  style.select_text_color_black,
+                  style.select_text_color_white
+                )}
               >
                 <option value="GBP">Pounds Sterling (GBP)</option>
                 <option value="USD">Dollars (USD)</option>
