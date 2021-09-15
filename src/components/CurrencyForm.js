@@ -14,6 +14,7 @@ import {
   Spacer,
   useToast,
 } from "@chakra-ui/react";
+import { useColorModeValue } from "@chakra-ui/color-mode";
 
 const API_KEY = process.env.REACT_APP_RAPIDAPI_KEY;
 
@@ -81,11 +82,15 @@ const CurrencyForm = () => {
 
   return (
     <Fragment>
-      <Box bg="blue.500" p="4" borderRadius="2xl">
+      <Box
+        bg={useColorModeValue("blue.500", "blue.800")}
+        p="4"
+        borderRadius="2xl"
+      >
         <form onSubmit={submitFormHandler}>
           <Flex flexDirection="column">
             <FormControl mt="2">
-              <FormLabel>Currency 1</FormLabel>
+              <FormLabel color="white">Currency 1</FormLabel>
               <Select bg="white" ref={currencyOneInputRef}>
                 <option>GBP</option>
                 <option>USD</option>
@@ -100,7 +105,7 @@ const CurrencyForm = () => {
             </FormControl>
 
             <FormControl mt="2">
-              <FormLabel>Currency 2</FormLabel>
+              <FormLabel color="white">Currency 2</FormLabel>
               <Select bg="white" ref={currencyTwoInputRef}>
                 <option>GBP</option>
                 <option>USD</option>
@@ -115,7 +120,7 @@ const CurrencyForm = () => {
             </FormControl>
 
             <FormControl mt="2" isRequired>
-              <FormLabel>Amount</FormLabel>
+              <FormLabel color="white">Amount</FormLabel>
               <Input type="text" bg="white" ref={currencyAmountRef}></Input>
               <FormHelperText color="white">Enter the amount.</FormHelperText>
             </FormControl>
@@ -129,6 +134,7 @@ const CurrencyForm = () => {
                     rightIcon={<ArrowForwardIcon />}
                     type="submit"
                     onClick={showResultsHandler}
+                    color="white"
                   >
                     Convert
                   </Button>
@@ -142,6 +148,7 @@ const CurrencyForm = () => {
                     onClick={showResultsHandler}
                     isLoading
                     loadingText="Converting"
+                    color="white"
                   ></Button>
                 )}
               </Box>
