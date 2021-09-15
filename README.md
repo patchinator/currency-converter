@@ -2,6 +2,8 @@
 
 A simple currency converter built using React Native.
 
+[Try it out](https://currency-converter-git-master-patchinator.vercel.app/)
+
 ## Tools
 
 * React Native
@@ -20,9 +22,6 @@ insanely easy to use (particularly thanks to extensive documentation). The proje
 intended to further familiarise myself with the React Framework; a framework I very much now
 admire. 
 
-## Screenshots
+## Screenshot
 
 ![alt text](https://github.com/patchinator/currency-converter/blob/master/src/images/image1.png)
-
-
-![alt text](https://github.com/patchinator/currency-converter/blob/master/src/images/image2.png)
