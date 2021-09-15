@@ -104,6 +104,14 @@ const CurrencyForm = () => {
                 <option value="JPY">Japanese Yen (JPY)</option>
                 <option value="CAD">Canadian Dollars (CAD)</option>
                 <option value="AUD">Australian Dollars (AUD)</option>
+                <option value="RUB">Russian Ruble (RUB)</option>
+                <option value="DKK">Danish Krone (DKK)</option>
+                <option value="INR">Indian Rupee (INR)</option>
+                <option value="MXN">Mexican Peso (MXN)</option>
+                <option value="ZAR">South African Rand (ZAR)</option>
+                <option value="CHF">Swiss Franc (CHF)</option>
+                <option value="TRY">Turkish Lira (TRY)</option>
+                <option value="VND">Vietnamese Dong (VND)</option>
               </Select>
               <FormHelperText color="white">
                 Select a currency you wish to convert.
@@ -124,6 +132,14 @@ const CurrencyForm = () => {
                 <option value="JPY">Japanese Yen (JPY)</option>
                 <option value="CAD">Canadian Dollars (CAD)</option>
                 <option value="AUD">Australian Dollars (AUD)</option>
+                <option value="RUB">Russian Ruble (RUB)</option>
+                <option value="DKK">Danish Krone (DKK)</option>
+                <option value="INR">Indian Rupee (INR)</option>
+                <option value="MXN">Mexican Peso (MXN)</option>
+                <option value="ZAR">South African Rand (ZAR)</option>
+                <option value="CHF">Swiss Franc (CHF)</option>
+                <option value="TRY">Turkish Lira (TRY)</option>
+                <option value="VND">Vietnamese Dong (VND)</option>
               </Select>
               <FormHelperText color="white">
                 Select a currency you wish to convert to.
