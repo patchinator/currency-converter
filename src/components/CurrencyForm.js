@@ -113,6 +113,7 @@ const CurrencyForm = () => {
                 bg="white"
                 ref={currencyTwoInputRef}
                 color={optionColorBlack}
+                className={style.select_text_color}
               >
                 <option value="GBP">Pounds Sterling (GBP)</option>
                 <option value="USD">Dollars (USD)</option>
