@@ -1,3 +1,7 @@
-.select_text_color option {
-  background: white;
+.select_text_color_black option {
+  color: black
+}
+
+.select_text_color_white option {
+  color: white
 }

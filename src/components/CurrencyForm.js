@@ -93,7 +93,10 @@ const CurrencyForm = () => {
                 bg={useColorModeValue("white", "white")}
                 ref={currencyOneInputRef}
                 color={optionColorBlack}
-                className={style.select_text_color}
+                className={useColorModeValue(
+                  style.select_text_color_black,
+                  style.select_text_color_white
+                )}
               >
                 <option value="GBP">Pounds Sterling (GBP)</option>
                 <option value="USD">Dollars (USD)</option>
