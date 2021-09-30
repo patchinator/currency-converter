@@ -1,12 +1,13 @@
-import Form from "./components/Form";
-import Results from "./components/Results";
+import CurrencyForm from "./components/CurrencyForm";
 import { Fragment } from "react";
+import { Container } from "@chakra-ui/layout";
 
 function App() {
   return (
     <Fragment>
-      <Form />
-      <Results />
+      <Container maxWidth="md" p="4">
+        <CurrencyForm />
+      </Container>
     </Fragment>
   );
 }
