@@ -15,7 +15,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { useColorModeValue } from "@chakra-ui/color-mode";
-import style from './CurrencyForm.module.css';
+import style from "./CurrencyForm.module.css";
 
 const API_KEY = process.env.REACT_APP_RAPIDAPI_KEY;
 
@@ -104,6 +104,14 @@ const CurrencyForm = () => {
                 <option value="JPY">Japanese Yen (JPY)</option>
                 <option value="CAD">Canadian Dollars (CAD)</option>
                 <option value="AUD">Australian Dollars (AUD)</option>
+                <option value="RUB">Russian Ruble (RUB)</option>
+                <option value="DKK">Danish Krone (DKK)</option>
+                <option value="INR">Indian Rupee (INR)</option>
+                <option value="MXN">Mexican Peso (MXN)</option>
+                <option value="ZAR">South African Rand (ZAR)</option>
+                <option value="CHF">Swiss Franc (CHF)</option>
+                <option value="TRY">Turkish Lira (TRY)</option>
+                <option value="VND">Vietnamese Dong (VND)</option>
               </Select>
               <FormHelperText color="white">
                 Select a currency you wish to convert.
@@ -116,7 +124,10 @@ const CurrencyForm = () => {
                 bg="white"
                 ref={currencyTwoInputRef}
                 color={optionColorBlack}
-                className={style.select_text_color}
+                className={useColorModeValue(
+                  style.select_text_color_black,
+                  style.select_text_color_white
+                )}
               >
                 <option value="GBP">Pounds Sterling (GBP)</option>
                 <option value="USD">Dollars (USD)</option>
@@ -124,6 +135,14 @@ const CurrencyForm = () => {
                 <option value="JPY">Japanese Yen (JPY)</option>
                 <option value="CAD">Canadian Dollars (CAD)</option>
                 <option value="AUD">Australian Dollars (AUD)</option>
+                <option value="RUB">Russian Ruble (RUB)</option>
+                <option value="DKK">Danish Krone (DKK)</option>
+                <option value="INR">Indian Rupee (INR)</option>
+                <option value="MXN">Mexican Peso (MXN)</option>
+                <option value="ZAR">South African Rand (ZAR)</option>
+                <option value="CHF">Swiss Franc (CHF)</option>
+                <option value="TRY">Turkish Lira (TRY)</option>
+                <option value="VND">Vietnamese Dong (VND)</option>
               </Select>
               <FormHelperText color="white">
                 Select a currency you wish to convert to.
