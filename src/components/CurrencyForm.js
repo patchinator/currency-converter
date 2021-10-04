@@ -12,7 +12,10 @@ import {
   Box,
   Text,
   Spacer,
+  useToast,
 } from "@chakra-ui/react";
+import { useColorModeValue } from "@chakra-ui/color-mode";
+import style from './CurrencyForm.module.css';
 
 const API_KEY = process.env.REACT_APP_RAPIDAPI_KEY;
 
@@ -20,18 +23,21 @@ const CurrencyForm = () => {
   const [currencyRate, setCurrencyRate] = useState("");
   const [currencyExchangeRate, setCurrencyExchangeRate] = useState("");
   const [showResults, setShowResults] = useState(false);
+  const [isConverting, setIsConverting] = useState(false);
+  const optionColorBlack = useColorModeValue("black", "black");
 
   const currencyOneInputRef = useRef();
   const currencyTwoInputRef = useRef();
   const currencyAmountRef = useRef();
+  const toast = useToast();
 
   const displayCurrencyTwoHandler = () => {
     return currencyTwoInputRef.current.value;
-  }
+  };
 
   const displayCurrencyOneHandler = () => {
     return currencyOneInputRef.current.value;
-  }
+  };
 
   const showResultsHandler = () => {
     setShowResults(true);
@@ -39,6 +45,7 @@ const CurrencyForm = () => {
 
   const submitFormHandler = (event) => {
     event.preventDefault();
+    setIsConverting(true);
 
     const firstCurrency = currencyOneInputRef.current.value;
     const secondCurrency = currencyTwoInputRef.current.value;
@@ -55,29 +62,45 @@ const CurrencyForm = () => {
         },
       }
     ).then((response) => {
-      response.json().then((data) => {
-        const exchangeRateAmount = data.rates[secondCurrency].rate_for_amount;
-        const currencyExchangeRate = data.rates[secondCurrency].rate;
-        setCurrencyRate(exchangeRateAmount);
-        setCurrencyExchangeRate(currencyExchangeRate);
-      });
+      if (response.ok) {
+        response.json().then((data) => {
+          setIsConverting(false);
+          const exchangeRateAmount = data.rates[secondCurrency].rate_for_amount;
+          const currencyExchangeRate = data.rates[secondCurrency].rate;
+          setCurrencyRate(exchangeRateAmount);
+          setCurrencyExchangeRate(currencyExchangeRate);
+        });
+      } else {
+        toast({
+          description: "Unable to convert",
+          status: "error",
+          duration: 4000,
+          isClosable: true,
+          position: "top",
+        });
+      }
     });
   };
 
   return (
     <Fragment>
-      <Box bg="orange.500" p="4" borderRadius="2xl">
+      <Box bg="blue.800" p="4" borderRadius="2xl">
         <form onSubmit={submitFormHandler}>
           <Flex flexDirection="column">
             <FormControl mt="2">
-              <FormLabel>Currency 1</FormLabel>
-              <Select bg="white" ref={currencyOneInputRef}>
-                <option>GBP</option>
-                <option>USD</option>
-                <option>EUR</option>
-                <option>JPY</option>
-                <option>CAD</option>
-                <option>AUD</option>
+              <FormLabel color="white">Currency 1</FormLabel>
+              <Select
+                bg={useColorModeValue("white", "white")}
+                ref={currencyOneInputRef}
+                color={optionColorBlack}
+                className={style.select_text_color}
+              >
+                <option value="GBP">Pounds Sterling (GBP)</option>
+                <option value="USD">Dollars (USD)</option>
+                <option value="EUR">Euros (EUR)</option>
+                <option value="JPY">Japanese Yen (JPY)</option>
+                <option value="CAD">Canadian Dollars (CAD)</option>
+                <option value="AUD">Australian Dollars (AUD)</option>
               </Select>
               <FormHelperText color="white">
                 Select a currency you wish to convert.
@@ -85,37 +108,62 @@ const CurrencyForm = () => {
             </FormControl>
 
             <FormControl mt="2">
-              <FormLabel>Currency 2</FormLabel>
-              <Select bg="white" ref={currencyTwoInputRef}>
-                <option>GBP</option>
-                <option>USD</option>
-                <option>EUR</option>
-                <option>JPY</option>
-                <option>CAD</option>
-                <option>AUD</option>
+              <FormLabel color="white">Currency 2</FormLabel>
+              <Select
+                bg="white"
+                ref={currencyTwoInputRef}
+                color={optionColorBlack}
+                className={style.select_text_color}
+              >
+                <option value="GBP">Pounds Sterling (GBP)</option>
+                <option value="USD">Dollars (USD)</option>
+                <option value="EUR">Euros (EUR)</option>
+                <option value="JPY">Japanese Yen (JPY)</option>
+                <option value="CAD">Canadian Dollars (CAD)</option>
+                <option value="AUD">Australian Dollars (AUD)</option>
               </Select>
               <FormHelperText color="white">
                 Select a currency you wish to convert to.
               </FormHelperText>
             </FormControl>
 
-            <FormControl mt="2">
-              <FormLabel>Amount</FormLabel>
-              <Input type="text" bg="white" ref={currencyAmountRef}></Input>
+            <FormControl mt="2" isRequired>
+              <FormLabel color="white">Amount</FormLabel>
+              <Input
+                type="text"
+                bg="white"
+                ref={currencyAmountRef}
+                color={optionColorBlack}
+              ></Input>
               <FormHelperText color="white">Enter the amount.</FormHelperText>
             </FormControl>
 
             <Flex justifyContent="center" mt="5">
               <Box>
-                <Button
-                  colorScheme="green"
-                  size="md"
-                  rightIcon={<ArrowForwardIcon />}
-                  type="submit"
-                  onClick={showResultsHandler}
-                >
-                  Convert
-                </Button>
+                {!isConverting && (
+                  <Button
+                    colorScheme="whiteAlpha"
+                    size="md"
+                    rightIcon={<ArrowForwardIcon />}
+                    type="submit"
+                    onClick={showResultsHandler}
+                    color="white"
+                  >
+                    Convert
+                  </Button>
+                )}
+                {isConverting && (
+                  <Button
+                    colorScheme="whiteAlpha"
+                    size="md"
+                    rightIcon={<ArrowForwardIcon />}
+                    type="submit"
+                    onClick={showResultsHandler}
+                    isLoading
+                    loadingText="Converting"
+                    color="white"
+                  ></Button>
+                )}
               </Box>
             </Flex>
           </Flex>
@@ -124,25 +172,26 @@ const CurrencyForm = () => {
 
       <Spacer mt="4" />
 
-      {showResults && (
+      {showResults && currencyAmountRef.current.value && (
         <Container w="100%" p="0">
-          <Box bg="orange.500" p="3" borderRadius="2xl">
+          <Box bg="blue.800" p="3" borderRadius="2xl">
             <Flex justifyContent="center">
               <Box
                 bg="white"
-                pl="5"
-                pr="5"
+                width="100%"
                 pt="1"
                 pb="1"
                 borderRadius="md"
                 boxShadow="md"
               >
-                <Text textAlign="center">
-                  Current Rate: {displayCurrencyTwoHandler()} {currencyRate}
+                <Text textAlign="center" color="black">
+                  <Text fontWeight="bold">Current Rate</Text>{" "}
+                  {displayCurrencyTwoHandler()} {currencyRate}
                 </Text>
-                <Text textAlign="center">
-                  Exchange Rate: {displayCurrencyTwoHandler()}{" "}
-                  {currencyExchangeRate} / {displayCurrencyOneHandler()}
+                <Text textAlign="center" color="black">
+                  <Text fontWeight="bold">Exchange Rate</Text>{" "}
+                  {displayCurrencyTwoHandler()} {currencyExchangeRate} /{" "}
+                  {displayCurrencyOneHandler()}
                 </Text>
               </Box>
             </Flex>
